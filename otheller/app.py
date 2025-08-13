@@ -1,5 +1,4 @@
 import importlib.util
-import sys
 from pathlib import Path
 
 from flask import Flask, Response, current_app, jsonify, render_template, request
@@ -29,10 +28,6 @@ class PlayerStrategy(StrategyBase):
 
 def _load_strategy(file_path: str, player: int) -> StrategyBase | None:
     try:
-        uploads_dir = str(Path(file_path).parent)
-        if uploads_dir not in sys.path:
-            sys.path.insert(0, uploads_dir)
-
         # Load module dynamically
         spec = importlib.util.spec_from_file_location("strategy_module", file_path)
         if spec is None:
